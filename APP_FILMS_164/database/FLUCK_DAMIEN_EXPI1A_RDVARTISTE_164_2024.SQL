@@ -31,12 +31,6 @@ USE FLUCK_DAMIEN_EXPI1A_RDVARTISTE_164_2024;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
-
--- Listage de la structure de la base pour fluck_damien_expi1a
-DROP DATABASE IF EXISTS `fluck_damien_expi1a`;
-CREATE DATABASE IF NOT EXISTS `fluck_damien_expi1a` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `fluck_damien_expi1a`;
-
 -- Listage de la structure de table fluck_damien_expi1a. t_compte
 DROP TABLE IF EXISTS `t_compte`;
 CREATE TABLE IF NOT EXISTS `t_compte` (
