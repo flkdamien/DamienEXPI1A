@@ -5,7 +5,7 @@
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Genres
+				Compte
 			</p>
             <table class="table table-bordered table-sm">
             {% if data %}
@@ -15,16 +15,13 @@
                             Id
                         </th>
                         <th class="align-middle">
-                            Genre
+                            Compte
                         </th>
                         <th class="align-middle">
-							Date insertion (pour exemple)
+							Permission
                         </th>
                         <th class="align-middle">
-
-                        </th>
-                        <th class="align-middle">
-
+                            Mot de passe
                         </th>
                     </tr>
                 </thead>
@@ -34,14 +31,18 @@
 				<tbody>
 					<tr>
 						<td class="align-middle">
-							{{ row.id_genre }}
+							{{ row.id_compte }}
 						</td>
 						<td class="align-middle">
-							{{ row.intitule_genre }}
+							{{ row.Nom_Pseudo }}
 						</td>
 						<td class="align-middle">
-							{{ row.date_ins_genre }}
+							{{ row.Nom_type_de_compte }}
 						</td>
+						<td class="align-middle">
+							{{ row.Mot_de_passe }}
+						</td>
+
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
 						</td>
@@ -57,7 +58,7 @@
 				<tbody>
 					<tr>
 						<td>
-							Aucun genre.
+							Aucun compte.
 						</td>
 						<td>
 							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
