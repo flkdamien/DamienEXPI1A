@@ -1,11 +1,11 @@
 {% extends "base.html" %}
-{% block title %} Editer un GENRE (WTF) {% endblock %}
+{% block title %} Editer un Compte (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
 			<p>
-				Editer un GENRE
+				Editer un Compte
 			</p>
 			<form action="" method="POST" novalidate>
 				<!-- Protection contre les attaques Cross-Site Request Forgery (CSRF) -->
@@ -19,9 +19,9 @@
 						{% endfor %}
 					</p>
 					<p>
-						{{ form_update.Mot_de_Passe_wtf_essai.label }}<br>
-						{{ form_update.Mot_de_Passe_wtf_essai(size=32) }}<br>
-						{% for error in form_update.Mot_de_Passe_wtf_essai.errors %}
+						{{ form_update.Mot_de_Passe_wtf.label }}<br>
+						{{ form_update.Mot_de_Passe_wtf(size=32) }}<br>
+						{% for error in form_update.Mot_de_Passe_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
