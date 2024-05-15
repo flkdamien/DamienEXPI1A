@@ -19,9 +19,9 @@
 						{% endfor %}
 					</p>
 					<p>
-						{{ form_update.Mot_de_Passe_wtf.label }}<br>
-						{{ form_update.Mot_de_Passe_wtf(size=32) }}<br>
-						{% for error in form_update.Mot_de_Passe_wtf.errors %}
+						{{ form_update.Mot_de_Passe_update_wtf.label }}<br>
+						{{ form_update.Mot_de_Passe_update_wtf(size=32) }}<br>
+						{% for error in form_update.Mot_de_Passe_update_wtf.errors %}
 							<span style="color: red;">[{{ error }}]</span>
 						{% endfor %}
 					</p>
