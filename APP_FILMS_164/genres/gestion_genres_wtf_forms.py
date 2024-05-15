@@ -32,6 +32,14 @@ class FormWTFAjouterGenres(FlaskForm):
                                                                    "d'espace à double, de double "
                                                                    "apostrophe, de double trait union")
                                                     ])
+    Nom_type_de_Compte_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    Nom_type_de_Compte_wtf = StringField("Type de Compte (Admin or User) ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+                                                                Regexp(Nom_type_de_Compte_regexp,
+                                                                       message="Pas de chiffres, de caractères "
+                                                                               "spéciaux, "
+                                                                               "d'espace à double, de double "
+                                                                               "apostrophe, de double trait union")
+                                                                ])
     submit = SubmitField("Enregistrer le compte")
 
 
@@ -65,7 +73,7 @@ class FormWTFDeleteGenre(FlaskForm):
         submit_btn_conf_del : Bouton de confirmation pour effacer un "genre".
         submit_btn_annuler : Bouton qui permet d'afficher la table "t_genre".
     """
-    nom_genre_delete_wtf = StringField("Effacer ce genre")
-    submit_btn_del = SubmitField("Effacer genre")
-    submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ?")
+    nom_genre_delete_wtf = StringField("Effacer ce compte")
+    submit_btn_del = SubmitField("Effacer compte")
+    submit_btn_conf_del = SubmitField("Etes-vous sur d'effacer ce compte ?")
     submit_btn_annuler = SubmitField("Annuler")
