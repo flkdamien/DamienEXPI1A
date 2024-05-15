@@ -47,7 +47,7 @@ def genres_afficher(order_by, id_genre_sel):
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_compte_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_genre, intitule_genre, date_ins_genre  FROM t_genre ORDER BY id_genre DESC"""
+                    strsql_genres_afficher = """SELECT id_compte, Nom_pseudo, Mot_de_Passe, Nom_type_de_Compte  FROM t_compte ORDER BY id_compte ASC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -118,8 +118,8 @@ def genres_ajouter_wtf():
                 flash(f"Données insérées !!", "success")
                 print(f"Données insérées !!")
 
-                # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (DESC)
-                return redirect(url_for('genres_afficher', order_by='DESC', id_genre_sel=0))
+                # Pour afficher et constater l'insertion de la valeur, on affiche en ordre inverse. (ASC)
+                return redirect(url_for('genres_afficher', order_by='ASC', id_genre_sel=0))
 
         except Exception as Exception_genres_ajouter_wtf:
             raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
