@@ -33,12 +33,8 @@ class FormWTFAjouterGenres(FlaskForm):
                                                                    "apostrophe, de double trait union")
                                                     ])
     Nom_type_de_Compte_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    Nom_type_de_Compte_wtf = StringField("Type de Compte (Admin or User) ", validators=[Length(min=2, max=20, message="min 2 max 20"),
-                                                                Regexp(Nom_type_de_Compte_regexp,
-                                                                       message="Pas de chiffres, de caractères "
-                                                                               "spéciaux, "
-                                                                               "d'espace à double, de double "
-                                                                               "apostrophe, de double trait union")
+    Nom_type_de_Compte_wtf = StringField("Type de Compte (Admin or User) ", validators=[Length(min=2, max=20, message="Veuillez Selectionner un type de compte !!!"),
+
                                                                 ])
     submit = SubmitField("Enregistrer le compte")
 
