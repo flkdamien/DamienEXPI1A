@@ -106,7 +106,7 @@ def genres_ajouter_wtf():
                 Mot_de_Passe = form.Mot_de_Passe_wtf.data
                 Nom_type_de_Compte = form.Nom_type_de_Compte_wtf.data
                 valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre,
-                                                  "value_mdp": Mot_de_Passe
+                                                  "value_mdp": Mot_de_Passe,
                                                   "value_typecompte": Nom_type_de_Compte
                                                   }
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
