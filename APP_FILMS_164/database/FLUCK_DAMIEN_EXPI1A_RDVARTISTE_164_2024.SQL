@@ -1,20 +1,3 @@
--- OM 2021.02.17
--- FICHIER MYSQL POUR FAIRE FONCTIONNER LES EXEMPLES
--- DE REQUETES MYSQL
--- Database: MACCAUD_OLIVIER_INFO1X_FILMS_164_2023
-
--- Destruction de la BD si elle existe.
--- Pour être certain d'avoir la dernière version des données
-
-DROP DATABASE IF EXISTS FLUCK_DAMIEN_EXPI1A_RDVARTISTE_164_2024;
-
--- Création d'un nouvelle base de donnée
-
-CREATE DATABASE IF NOT EXISTS FLUCK_DAMIEN_EXPI1A_RDVARTISTE_164_2024;
-
--- Utilisation de cette base de donnée
-
-USE FLUCK_DAMIEN_EXPI1A_RDVARTISTE_164_2024;
 -- --------------------------------------------------------
 -- Hôte:                         127.0.0.1
 -- Version du serveur:           8.0.30 - MySQL Community Server - GPL
@@ -43,18 +26,33 @@ CREATE TABLE IF NOT EXISTS `t_compte` (
   `id_compte` int NOT NULL AUTO_INCREMENT,
   `Nom_Pseudo` varchar(50) DEFAULT NULL,
   `Mot_de_passe` varchar(50) DEFAULT NULL,
-  `Nom_type_de_compte` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_compte`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `fk_type_compte` int DEFAULT NULL,
+  `is_delete` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id_compte`),
+  KEY `FK_t_compte_t_type_compte` (`fk_type_compte`),
+  CONSTRAINT `FK_t_compte_t_type_compte` FOREIGN KEY (`fk_type_compte`) REFERENCES `t_type_compte` (`id_type_compte`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_compte : ~5 rows (environ)
-INSERT INTO `t_compte` (`id_compte`, `Nom_Pseudo`, `Mot_de_passe`, `Nom_type_de_compte`) VALUES
-	(1, 'TheoThiste', '1234', 'User'),
-	(2, 'Lezarabe', '6969', 'User'),
-	(3, 'SuciteLair', '969696', 'User'),
-	(4, 'Jeancultamer', 'pasdinspi', 'User'),
-	(5, 'GeorgeSauciflar', 'Informatique=merde', 'Admin'),
-	(6, 'groscon', NULL, NULL);
+-- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_compte : ~18 rows (environ)
+INSERT INTO `t_compte` (`id_compte`, `Nom_Pseudo`, `Mot_de_passe`, `fk_type_compte`, `is_delete`) VALUES
+	(1, 'TheoThiste', '1234', 2, 0),
+	(2, 'Lezarabe', '6969', 2, 0),
+	(3, 'SuciteLair', '969696', 1, 0),
+	(4, 'Jeancultamer', 'pasdinspi', 2, 0),
+	(5, 'GeorgeSauciflar', 'Informatique=merde', 1, 0),
+	(6, 'groscon', NULL, 1, 0),
+	(9, 'wetwetw', 'ertq', 1, 0),
+	(10, 'rztzr', 'ztrz', 2, 0),
+	(11, 'tzstzueu', 'dghjghj', 2, 0),
+	(12, 'aaaaaaaaaaaaa', 'ssssssssssssssss', 2, 0),
+	(13, 'aaaaaaaaaaaaaaaaa', 'sssss', 1, 0),
+	(14, 'dghjdgzj', 'cghjdghj', 1, 0),
+	(15, 'sgsfh', 'sfhgsh', 2, 0),
+	(16, 'gfhsfgh', 'dghjdgjh', 1, 0),
+	(17, 'dghj', 'dghjd', 1, 0),
+	(18, 'adfhgagf', 'test45', 1, 0),
+	(19, 'tttttt', 'seseleves', 2, 0),
+	(20, 'sssssssssssssss', 'sa', 2, 0);
 
 -- Listage de la structure de table fluck_damien_expi1a_rdvartiste_164_2024. t_creation_compte
 DROP TABLE IF EXISTS `t_creation_compte`;
@@ -68,15 +66,16 @@ CREATE TABLE IF NOT EXISTS `t_creation_compte` (
   KEY `Fk_compte_personne` (`Fk_compte_personne`),
   CONSTRAINT `FK_t_creation_compte_t_compte` FOREIGN KEY (`Fk_compte_personne`) REFERENCES `t_compte` (`id_compte`),
   CONSTRAINT `FK_t_creation_compte_t_personne` FOREIGN KEY (`Fk_personne_compte`) REFERENCES `t_personne` (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_creation_compte : ~5 rows (environ)
+-- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_creation_compte : ~6 rows (environ)
 INSERT INTO `t_creation_compte` (`id_creation_compte`, `Fk_personne_compte`, `Fk_compte_personne`, `Date_creation_compte`) VALUES
 	(1, 1, 1, '2024-03-11 15:32:54'),
 	(2, 2, 2, '2024-03-11 15:33:12'),
 	(3, 3, 3, '2024-03-11 15:33:22'),
 	(4, 4, 4, '2024-03-11 15:33:31'),
-	(5, 5, 5, '2024-03-11 15:33:40');
+	(5, 5, 5, '2024-03-11 15:33:40'),
+	(6, 6, 1, '2024-05-19 15:26:29');
 
 -- Listage de la structure de table fluck_damien_expi1a_rdvartiste_164_2024. t_declination_evenement
 DROP TABLE IF EXISTS `t_declination_evenement`;
@@ -186,16 +185,17 @@ CREATE TABLE IF NOT EXISTS `t_personne` (
   `Mail` varchar(50) DEFAULT NULL,
   `Telephone` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id_personne`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_personne : ~6 rows (environ)
+-- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_personne : ~7 rows (environ)
 INSERT INTO `t_personne` (`id_personne`, `Prenom`, `Nom`, `Date_Naissance`, `Mail`, `Telephone`) VALUES
 	(1, 'Theo', 'Thiste', '2004-03-06 09:05:35', 'theo.thiste@lol.ch', '0798763456'),
 	(2, 'Leza', 'Rabe', '2000-03-06 09:07:11', 'lesa.rabe@bombe.ch', '0317774693'),
 	(3, 'Lair', 'Sucite', '2001-03-06 09:08:30', 'sucite.laire@contrelesucide.ch', '0417787640'),
 	(4, 'Jean', 'Cultamer', '2000-03-11 15:07:41', 'jean.cultamer@onlyfan.com', '0417709654'),
 	(5, 'George', 'Sauciflare', '2010-03-11 15:08:03', 'george.sauciflare@saucisse.ch', '0917798753'),
-	(6, 'Jade', 'Orlabite', '2010-03-11 15:48:55', 'jade.orlabite@xxx.com', '0779874565');
+	(6, 'Jade', 'Orlabite', '2010-03-11 15:48:55', 'jade.orlabite@xxx.com', '0779874565'),
+	(7, 'rtzwtzr', 'wrtzwrtz', '2003-05-19 14:49:08', 'wrtzwrtz', 'qert');
 
 -- Listage de la structure de table fluck_damien_expi1a_rdvartiste_164_2024. t_reservation_evenement
 DROP TABLE IF EXISTS `t_reservation_evenement`;
@@ -264,6 +264,19 @@ INSERT INTO `t_supression_compte` (`id_supression_compte`, `Fk_personne_compte`,
 	(3, 3, 3, '2024-03-11 15:35:46'),
 	(4, 4, 4, '2024-03-11 15:36:08'),
 	(5, 5, 5, '2024-03-15 15:36:06');
+
+-- Listage de la structure de table fluck_damien_expi1a_rdvartiste_164_2024. t_type_compte
+DROP TABLE IF EXISTS `t_type_compte`;
+CREATE TABLE IF NOT EXISTS `t_type_compte` (
+  `id_type_compte` int NOT NULL AUTO_INCREMENT,
+  `type_compte` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id_type_compte`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- Listage des données de la table fluck_damien_expi1a_rdvartiste_164_2024.t_type_compte : ~2 rows (environ)
+INSERT INTO `t_type_compte` (`id_type_compte`, `type_compte`) VALUES
+	(1, 'Administrateur'),
+	(2, 'Utilizzzateur');
 
 -- Listage de la structure de table fluck_damien_expi1a_rdvartiste_164_2024. t_validation_evenement
 DROP TABLE IF EXISTS `t_validation_evenement`;
