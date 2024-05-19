@@ -16,7 +16,7 @@ class FormWTFAjouterGenres(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     nom_genre_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    nom_genre_wtf = StringField("Nom ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    nom_genre_wtf = StringField("Nom/Pseudo ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                    Regexp(nom_genre_regexp,
                                                                           message="Pas de chiffres, de caractères "
                                                                                   "spéciaux, "
@@ -45,7 +45,7 @@ class FormWTFUpdateGenre(FlaskForm):
         Définition d'un "bouton" submit avec un libellé personnalisé.
     """
     Nom_Pseudo_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    Nom_Pseudo_update_wtf = StringField("Pseudo ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    Nom_Pseudo_update_wtf = StringField("Nom/Pseudo ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(Nom_Pseudo_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -55,7 +55,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                                          "union")
                                                                           ])
     Mot_de_Passe_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    Mot_de_Passe_update_wtf = StringField("Mdp ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    Mot_de_Passe_update_wtf = StringField("Mot de passe ", validators=[Length(min=2, max=20, message="min 2 max 20"),
                                                                           Regexp(Mot_de_Passe_update_regexp,
                                                                                  message="Pas de chiffres, de "
                                                                                          "caractères "
@@ -68,7 +68,7 @@ class FormWTFUpdateGenre(FlaskForm):
 
     date_genre_wtf_essai = DateField("Essai date", validators=[InputRequired("Date obligatoire"),
                                                                DataRequired("Date non valide")])
-    submit = SubmitField("Update genre")
+    submit = SubmitField("Modifier le compte")
 
 
 class FormWTFDeleteGenre(FlaskForm):
