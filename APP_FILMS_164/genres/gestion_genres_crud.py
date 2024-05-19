@@ -34,7 +34,7 @@ def genres_afficher(order_by, id_genre_sel):
         try:
             with DBconnection() as mc_afficher:
                 if order_by == "ASC" and id_genre_sel == 0:
-                    strsql_genres_afficher = """SELECT * FROM t_compte ORDER BY id_compte ASC"""
+                    strsql_genres_afficher = """SELECT * FROM t_compte INNER JOIN t_type_compte ON t_type_compte.id_type_compte = t_compte.fk_type_compte ORDER BY id_compte ASC"""
                     mc_afficher.execute(strsql_genres_afficher)
                 elif order_by == "ASC":
                     # C'EST LA QUE VOUS ALLEZ DEVOIR PLACER VOTRE PROPRE LOGIQUE MySql
@@ -47,7 +47,7 @@ def genres_afficher(order_by, id_genre_sel):
 
                     mc_afficher.execute(strsql_genres_afficher, valeur_id_compte_selected_dictionnaire)
                 else:
-                    strsql_genres_afficher = """SELECT id_compte, Nom_pseudo, Mot_de_Passe, Nom_type_de_Compte  FROM t_compte ORDER BY id_compte ASC"""
+                    strsql_genres_afficher = """SELECT * FROM t_compte INNER JOIN t_type_compte ON t_type_compte.id_type_compte = t_compte.fk_type_compte ORDER BY id_compte ASC"""
 
                     mc_afficher.execute(strsql_genres_afficher)
 
@@ -98,20 +98,28 @@ def genres_afficher(order_by, id_genre_sel):
 @app.route("/genres_ajouter", methods=['GET', 'POST'])
 def genres_ajouter_wtf():
     form = FormWTFAjouterGenres()
+    # 2024.05.19 OM Pour remplir une dropdown liste
+    str_sql_type_compte = "SELECT * FROM t_type_compte"
+    with DBconnection() as mybd_conn:
+        mybd_conn.execute(str_sql_type_compte)
+    data_type_compte = mybd_conn.fetchall()
+    print("data_type_compte ", data_type_compte)
+    form.comptes_dropdown_wtf.choices = [(row['id_type_compte'], row['type_compte']) for row in data_type_compte]
+
     if request.method == "POST":
         try:
             if form.validate_on_submit():
                 name_genre_wtf = form.nom_genre_wtf.data
                 name_genre = name_genre_wtf.lower()
                 Mot_de_Passe = form.Mot_de_Passe_wtf.data
-                Nom_type_de_Compte = form.Nom_type_de_Compte_wtf.data
+                Nom_type_de_Compte = form.comptes_dropdown_wtf.data
                 valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre,
                                                   "value_mdp": Mot_de_Passe,
                                                   "value_typecompte": Nom_type_de_Compte
                                                   }
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_genre = """INSERT INTO t_compte (id_compte,Nom_Pseudo,Mot_de_Passe,Nom_type_de_Compte) VALUES (NULL,%(value_intitule_genre)s,%(value_mdp)s,%(value_typecompte)s) """
+                strsql_insert_genre = """INSERT INTO t_compte (id_compte,Nom_Pseudo,Mot_de_Passe,fk_type_compte) VALUES (NULL,%(value_intitule_genre)s,%(value_mdp)s,%(value_typecompte)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -125,7 +133,6 @@ def genres_ajouter_wtf():
             raise ExceptionGenresAjouterWtf(f"fichier : {Path(__file__).name}  ;  "
                                             f"{genres_ajouter_wtf.__name__} ; "
                                             f"{Exception_genres_ajouter_wtf}")
-
     return render_template("genres/genres_ajouter_wtf.html", form=form)
 
 
@@ -156,6 +163,14 @@ def genre_update_wtf():
 
     # Objet formulaire pour l'UPDATE
     form_update = FormWTFUpdateGenre()
+    # 2024.05.19 OM Pour remplir une dropdown liste
+    str_sql_type_compte = "SELECT * FROM t_type_compte"
+    with DBconnection() as mybd_conn:
+        mybd_conn.execute(str_sql_type_compte)
+    data_type_compte = mybd_conn.fetchall()
+    print("data_type_compte update ", data_type_compte)
+    form_update.comptes_dropdown_update_wtf.choices = [(row['id_type_compte'], row['type_compte']) for row in data_type_compte]
+
     try:
         # 2023.05.14 OM S'il y a des listes déroulantes dans le formulaire
         # La validation pose quelques problèmes
@@ -163,18 +178,21 @@ def genre_update_wtf():
             # Récupèrer la valeur du champ depuis "genre_update_wtf.html" après avoir cliqué sur "SUBMIT".
             # Puis la convertir en lettres minuscules.
             name_pseudo_update = form_update.Nom_Pseudo_update_wtf.data
-            name_pseudo_update = name_pseudo_update.lower()
+            # name_pseudo_update = name_pseudo_update.lower()
             mot_de_passe_update = form_update.Mot_de_Passe_update_wtf.data
+            type_compte = form_update.comptes_dropdown_update_wtf.data
+
 
 
             valeur_update_dictionnaire = {"value_id_compte_update": id_compte_update,
                                           "value_nom_pseudo": name_pseudo_update,
-                                          "value_mot_de_passe": mot_de_passe_update
+                                          "value_mot_de_passe": mot_de_passe_update,
+                                          "value_type_compte": type_compte
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
             str_sql_update_intitulegenre = """UPDATE t_compte SET Nom_Pseudo = %(value_nom_pseudo)s, 
-            Mot_de_Passe = %(value_mot_de_passe)s WHERE id_compte = %(value_id_compte_update)s """
+            Mot_de_Passe = %(value_mot_de_passe)s, fk_type_compte = %(value_type_compte)s WHERE id_compte = %(value_id_compte_update)s """
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
@@ -186,7 +204,9 @@ def genre_update_wtf():
             return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=0))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
-            str_sql_id_genre = "SELECT id_compte, Nom_Pseudo, Mot_de_Passe, Nom_type_de_Compte FROM t_compte " \
+            # str_sql_id_genre = "SELECT id_compte, Nom_Pseudo, Mot_de_Passe, Nom_type_de_Compte FROM t_compte " \
+            #                    "WHERE id_compte = %(value_id_compte)s"
+            str_sql_id_genre = "SELECT id_compte,Nom_Pseudo,Mot_de_passe,is_delete, fk_type_compte, id_type_compte, type_compte FROM t_compte INNER JOIN t_type_compte ON t_type_compte.id_type_compte = t_compte.fk_type_compte " \
                                "WHERE id_compte = %(value_id_compte)s"
             valeur_select_dictionnaire = {"value_id_compte": id_compte_update}
             with DBconnection() as mybd_conn:
@@ -198,7 +218,11 @@ def genre_update_wtf():
 
             # Afficher la valeur sélectionnée dans les champs du formulaire "genre_update_wtf.html"
             form_update.Nom_Pseudo_update_wtf.data = data_nom_compte["Nom_Pseudo"]
-            form_update.Mot_de_Passe_update_wtf.data = data_nom_compte["Mot_de_Passe"]
+            form_update.Mot_de_Passe_update_wtf.data = data_nom_compte["Mot_de_passe"]
+            form_update.comptes_dropdown_update_wtf.data = data_nom_compte["id_type_compte"]
+
+            # form_update.comptes_dropdown_update_wtf.choices = 2
+            # form_update.comptes_dropdown_update_wtf.default = 2
 
     except Exception as Exception_genre_update_wtf:
         raise ExceptionGenreUpdateWtf(f"fichier : {Path(__file__).name}  ;  "
@@ -254,8 +278,8 @@ def genre_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_compte": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_creation_compte = """DELETE FROM t_creation_compte WHERE FK_t_creation_compte_t_compte = %(value_id_compte)s"""
-                str_sql_delete_modification_compte = """DELETE FROM t_modification_compte WHERE FK_t_modification_compte_t_compte = %(value_id_compte)s"""
+                str_sql_delete_creation_compte = """DELETE FROM t_creation_compte WHERE Fk_compte_personne = %(value_id_compte)s"""
+                str_sql_delete_modification_compte = """DELETE FROM t_modification_compte WHERE Fk_compte_personne = %(value_id_compte)s"""
 
                 str_sql_delete_idcompte = """DELETE FROM t_compte WHERE id_compte = %(value_id_compte)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"

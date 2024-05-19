@@ -26,18 +26,11 @@
 						{% endfor %}
 					</p>
 					<p>
-
-						<label for="Nom_type_de_Compte_wtf">Type de Compte</label>
-							<select id="Nom_type_de_Compte_wtf" name="Nom_type_de_Compte_wtf">
-    							<option value="">Veuillez choisir un type de compte</option>
-    							<option value="Utilisateur">Utilisateur</option>
-								<option value="Administrateur">Administrateur</option>
-							</select>
-						<br>
-{% for error in form.Nom_type_de_Compte_wtf.errors %}
-    <span style="color: red;">[{{ error }}]</span>
-{% endfor %}
-
+						{{ form.comptes_dropdown_wtf.label }}<br>
+                        {{ form.comptes_dropdown_wtf }}
+						{% for error in form.comptes_dropdown_wtf.errors %}
+							<span style="color: red;">[{{ error }}]</span>
+						{% endfor %}
 					</p>
 				</div>
 				{{ form.submit(class="btn btn-primary") }}

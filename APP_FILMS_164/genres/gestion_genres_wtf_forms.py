@@ -6,6 +6,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, DateField
 from wtforms import SubmitField
+from wtforms import SelectField
 from wtforms.validators import Length, InputRequired, DataRequired
 from wtforms.validators import Regexp
 
@@ -32,10 +33,15 @@ class FormWTFAjouterGenres(FlaskForm):
                                                                    "d'espace à double, de double "
                                                                    "apostrophe, de double trait union")
                                                     ])
-    Nom_type_de_Compte_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    Nom_type_de_Compte_wtf = StringField("Type de Compte (Admin or User) ", validators=[Length(min=2, max=20, message="Veuillez Selectionner un type de compte !!!"),
-
-                                                                ])
+    comptes_dropdown_wtf = SelectField("Type de compte",
+                                    validators=[DataRequired(message="Sélectionner un type")],
+                                    coerce = int,
+                                    validate_choice=False
+                                    )
+    # Nom_type_de_Compte_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
+    # Nom_type_de_Compte_wtf = StringField("Type de Compte (Admin or User) ", validators=[Length(min=2, max=20, message="Veuillez Selectionner un type de compte !!!"),
+    #
+    #                                                             ])
     submit = SubmitField("Enregistrer le compte")
 
 
@@ -64,10 +70,13 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                                          "apostrophe, de double trait "
                                                                                          "union")
                                                                           ])
-
-
-    date_genre_wtf_essai = DateField("Essai date", validators=[InputRequired("Date obligatoire"),
-                                                               DataRequired("Date non valide")])
+    comptes_dropdown_update_wtf = SelectField("Type de compte",
+                                    validators=[DataRequired(message="Sélectionner un type")],
+                                    coerce = int,
+                                    validate_choice=False
+                                    )
+    # date_genre_wtf_essai = DateField("Essai date", validators=[InputRequired("Date obligatoire"),
+    #                                                            DataRequired("Date non valide")])
     submit = SubmitField("Modifier le compte")
 
 
