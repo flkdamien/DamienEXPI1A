@@ -183,7 +183,7 @@ def genre_update_wtf():
 
             # afficher et constater que la donnée est mise à jour.
             # Affiche seulement la valeur modifiée, "ASC" et l'"id_compte_update"
-            return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=id_compte_update))
+            return redirect(url_for('genres_afficher', order_by="ASC", id_genre_sel=0))
         elif request.method == "GET":
             # Opération sur la BD pour récupérer "id_genre" et "intitule_genre" de la "t_genre"
             str_sql_id_genre = "SELECT id_compte, Nom_Pseudo, Mot_de_Passe, Nom_type_de_Compte FROM t_compte " \
