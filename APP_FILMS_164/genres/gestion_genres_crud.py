@@ -309,6 +309,7 @@ def genre_delete_wtf():
                                              WHERE sup.FK_compte_personne = %(value_id_compte)s"""
 
 
+
             with DBconnection() as mydb_conn:
                 mydb_conn.execute(str_sql_genres_films_delete, valeur_select_dictionnaire)
                 data_films_attribue_genre_delete = mydb_conn.fetchall()
