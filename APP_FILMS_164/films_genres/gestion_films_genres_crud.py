@@ -33,15 +33,11 @@ def films_genres_afficher(id_film_sel):
         try:
             with DBconnection() as mc_afficher:
                 strsql_genres_films_afficher_data = """
-                                                    SELECT cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte, t_modification_compte.Date_modification_compte, t_supression_compte.Date_supression_compte,
+                                                    SELECT cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte,
                                                            GROUP_CONCAT(c.Nom_Pseudo) as Compte
                                                     FROM t_creation_compte AS cc
                                                     RIGHT JOIN t_personne AS p1 ON p1.id_personne = cc.Fk_personne_compte
                                                     LEFT JOIN t_compte AS c ON c.id_compte = cc.Fk_compte_personne
-                                                    RIGHT JOIN t_personne AS p2 ON p2.id_personne = t_modification_compte.Fk_personne_compte
-                                                    LEFT JOIN t_compte AS c2 ON c2.id_compte = t_modification_compte.Fk_compte_personne
-                                                    RIGHT JOIN t_personne AS p3 ON p3.id_personne = t_supression_compte.Fk_personne_compte
-                                                    LEFT JOIN t_compte AS c3 ON c3.id_compte = t_supression_compte.Fk_compte_personne
                                                     GROUP BY cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte;
                                                     """
                 if id_film_sel == 0:
