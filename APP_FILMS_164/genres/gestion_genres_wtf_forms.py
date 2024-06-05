@@ -34,7 +34,7 @@ class FormWTFAjouterGenres(FlaskForm):
                                                                    "apostrophe, de double trait union")
                                                     ])
     Url_image_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    Url_image_wtf = StringField("Url de la photo de profil ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    Url_image_wtf = StringField("Url de la photo de profil ", validators=[Length(min=2, max=9000, message="min 2 max 20"),
 
                                                                 ])
     comptes_dropdown_wtf = SelectField("Type de compte",
@@ -75,7 +75,7 @@ class FormWTFUpdateGenre(FlaskForm):
                                                                                          "union")
                                                                           ])
     Url_image_update_regexp = "^([A-Z]|[a-zÀ-ÖØ-öø-ÿ])[A-Za-zÀ-ÖØ-öø-ÿ]*['\- ]?[A-Za-zÀ-ÖØ-öø-ÿ]+$"
-    Url_image_update_wtf = StringField("Url de la photo de profil ", validators=[Length(min=2, max=20, message="min 2 max 20"),
+    Url_image_update_wtf = StringField("Url de la photo de profil ", validators=[Length(min=2, max=9000, message="min 2 max 9000"),
 
                                                                           ])
     comptes_dropdown_update_wtf = SelectField("Type de compte",
