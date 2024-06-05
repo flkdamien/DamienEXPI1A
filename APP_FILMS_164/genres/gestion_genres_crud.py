@@ -113,13 +113,15 @@ def genres_ajouter_wtf():
                 name_genre = name_genre_wtf.lower()
                 Mot_de_Passe = form.Mot_de_Passe_wtf.data
                 Nom_type_de_Compte = form.comptes_dropdown_wtf.data
+                Url_image = form.Url_image_wtf.data
                 valeurs_insertion_dictionnaire = {"value_intitule_genre": name_genre,
                                                   "value_mdp": Mot_de_Passe,
-                                                  "value_typecompte": Nom_type_de_Compte
+                                                  "value_typecompte": Nom_type_de_Compte,
+                                                  "value_url_image": Url_image
                                                   }
                 print("valeurs_insertion_dictionnaire ", valeurs_insertion_dictionnaire)
 
-                strsql_insert_genre = """INSERT INTO t_compte (id_compte,Nom_Pseudo,Mot_de_Passe,fk_type_compte) VALUES (NULL,%(value_intitule_genre)s,%(value_mdp)s,%(value_typecompte)s) """
+                strsql_insert_genre = """INSERT INTO t_compte (id_compte,Nom_Pseudo,Mot_de_Passe,fk_type_compte, Url_Image) VALUES (NULL,%(value_intitule_genre)s,%(value_mdp)s,%(value_typecompte)s,%(value_url_image)s) """
                 with DBconnection() as mconn_bd:
                     mconn_bd.execute(strsql_insert_genre, valeurs_insertion_dictionnaire)
 
@@ -180,6 +182,7 @@ def genre_update_wtf():
             name_pseudo_update = form_update.Nom_Pseudo_update_wtf.data
             # name_pseudo_update = name_pseudo_update.lower()
             mot_de_passe_update = form_update.Mot_de_Passe_update_wtf.data
+            url_update = form_update.Url_image_update_wtf.data
             type_compte = form_update.comptes_dropdown_update_wtf.data
 
 
@@ -187,12 +190,13 @@ def genre_update_wtf():
             valeur_update_dictionnaire = {"value_id_compte_update": id_compte_update,
                                           "value_nom_pseudo": name_pseudo_update,
                                           "value_mot_de_passe": mot_de_passe_update,
+                                          "value_url": url_update,
                                           "value_type_compte": type_compte
                                           }
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
             str_sql_update_intitulegenre = """UPDATE t_compte SET Nom_Pseudo = %(value_nom_pseudo)s, 
-            Mot_de_Passe = %(value_mot_de_passe)s, fk_type_compte = %(value_type_compte)s WHERE id_compte = %(value_id_compte_update)s """
+            Mot_de_Passe = %(value_mot_de_passe)s,Url_image = %(value_url)s, fk_type_compte = %(value_type_compte)s WHERE id_compte = %(value_id_compte_update)s """
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
