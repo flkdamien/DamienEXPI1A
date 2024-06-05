@@ -33,12 +33,21 @@ def films_genres_afficher(id_film_sel):
         try:
             with DBconnection() as mc_afficher:
                 strsql_genres_films_afficher_data = """
-                                                    SELECT cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte,
-                                                           GROUP_CONCAT(c.Nom_Pseudo) as Compte
-                                                    FROM t_creation_compte AS cc
-                                                    RIGHT JOIN t_personne AS p1 ON p1.id_personne = cc.Fk_personne_compte
-                                                    LEFT JOIN t_compte AS c ON c.id_compte = cc.Fk_compte_personne
-                                                    GROUP BY cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte;
+                                                    SELECT 
+    cc.id_creation_compte, 
+    c.Nom_Pseudo, 
+    cc.Date_creation_compte,
+    c.Url_image,  -- Ajoutez cette ligne pour inclure l'URL de l'image
+    GROUP_CONCAT(c.Nom_Pseudo) AS Compte
+FROM 
+    t_creation_compte AS cc
+RIGHT JOIN 
+    t_personne AS p1 ON p1.id_personne = cc.Fk_personne_compte
+LEFT JOIN 
+    t_compte AS c ON c.id_compte = cc.Fk_compte_personne
+GROUP BY 
+    cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte, c.Url_image;
+
                                                     """
                 if id_film_sel == 0:
                     # le paramètre 0 permet d'afficher tous les films
