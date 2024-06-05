@@ -6,16 +6,17 @@
 		<table class="table table-responsive-sm">
             {% if data %}
 				<thead>
-					<tr>
-						<th class="" >
-						  Id
-						</th>
+					<th>
 						<th class="" >
 						  Nom/Pseudo
 						</th>
 						<th class="" >
 						  Date de création du compte
-					</tr>
+						</th>
+						<th class="" >
+						  Image
+						</th>
+				</tr>
 				</thead>
 			{% endif %}
 			{% for row in data %}
@@ -29,12 +30,6 @@
 					  </th>
 					  <th class="align-middle">
 						{{ row.Date_creation_compte|default("", True) }}
-					  </th>
-					<th class="align-middle">
-						{{ row.Date_modification_compte|default("", True) }}
-					  </th>
-					<th class="align-middle">
-						{{ row.Date_supression_compte|default("", True) }}
 					  </th>
 					  <th class="align-middle">
 						<img class="img" src={{ row.cover_link_film|default(None, True) }} style="border: 0;display:block; width:150px; max-height:auto;"  alt = "image masquée FFP8 (in COVID-19 Memory) (absente) mod 164">
@@ -53,7 +48,7 @@
 							<a class="btn btn-warning" href="{{ url_for('edit_genre_film_selected', id_film_genres_edit_html=row.id_film) }}" role="button">Modifier</a>
 						</td>
 						<td class="align-middle" colspan="5">
-							{{ row.GenresFilms|default("PAS DE PERSONNE", True) }}
+							{{ row.Fk_compte_personne|default("PAS DE PERSONNE", True) }}
 						</td>
 					</tr>
 				</tr>
