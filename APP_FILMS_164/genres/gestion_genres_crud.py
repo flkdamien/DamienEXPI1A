@@ -196,7 +196,7 @@ def genre_update_wtf():
             print("valeur_update_dictionnaire ", valeur_update_dictionnaire)
 
             str_sql_update_intitulegenre = """UPDATE t_compte SET Nom_Pseudo = %(value_nom_pseudo)s, 
-            Mot_de_Passe = %(value_mot_de_passe)s,Url_image = %(value_url)s, fk_type_compte = %(value_type_compte)s WHERE id_compte = %(value_id_compte_update)s """
+            Mot_de_Passe = %(value_mot_de_passe)s, Url_image = %(value_url)s, fk_type_compte = %(value_type_compte)s WHERE id_compte = %(value_id_compte_update)s """
             with DBconnection() as mconn_bd:
                 mconn_bd.execute(str_sql_update_intitulegenre, valeur_update_dictionnaire)
 
