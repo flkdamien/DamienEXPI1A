@@ -33,25 +33,24 @@ def films_genres_afficher(id_film_sel):
         try:
             with DBconnection() as mc_afficher:
                 strsql_genres_films_afficher_data = """
-                                                    SELECT 
-                                                        cc.id_creation_compte, 
-                                                        c.Nom_Pseudo, 
-                                                        cc.Date_creation_compte,
-                                                        c.Url_image,  
-                                                        GROUP_CONCAT(c.Nom_Pseudo) AS Compte
-                                                    FROM 
-                                                        t_creation_compte AS cc
-                                                    LEFT JOIN 
-                                                        t_personne AS p1 ON p1.id_personne = cc.Fk_personne_compte
-                                                    LEFT JOIN 
-                                                        t_compte AS c ON c.id_compte = cc.Fk_compte_personne
-                                                    LEFT JOIN
-                                                        t_personne AS p2 ON p2.id_personne = cc.id_creation_compte
-                                                    RIGHT JOIN
-                                                        t_personne AS p3 ON p3.id_personne = cc.id_creation_compte
-                                                    WHERE cc.id_creation_compte IS NOT NULL
-                                                    GROUP BY 
-                                                        cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte, c.Url_image;
+                                                        SELECT 
+                                                            cc.id_creation_compte, 
+                                                            c.Nom_Pseudo, 
+                                                            cc.Date_creation_compte,
+                                                            c.Url_image, 
+                                                            p1.Nom, 
+                                                            p1.Prenom, 
+                                                            GROUP_CONCAT(c.Nom_Pseudo) AS Compte
+                                                        FROM 
+                                                            t_creation_compte AS cc
+                                                        LEFT JOIN 
+                                                            t_personne AS p1 ON p1.id_personne = cc.Fk_personne_compte
+                                                        LEFT JOIN 
+                                                            t_compte AS c ON c.id_compte = cc.Fk_compte_personne
+                                                        WHERE 
+                                                            cc.id_creation_compte IS NOT NULL
+                                                        GROUP BY 
+                                                            cc.id_creation_compte, c.Nom_Pseudo, cc.Date_creation_compte, c.Url_image, p1.Nom, p1.Prenom;
 
                                                     """
                 if id_film_sel == 0:
@@ -66,8 +65,7 @@ def films_genres_afficher(id_film_sel):
                     strsql_genres_films_afficher_data += """ HAVING id_film= %(value_id_film_selected)s"""
 
                     mc_afficher.execute(strsql_genres_films_afficher_data, valeur_id_film_selected_dictionnaire)
-
-                # Récupère les données de la requête.
+                   # Récupère les données de la requête.
                 data_genres_films_afficher = mc_afficher.fetchall()
                 print("data_genres ", data_genres_films_afficher, " Type : ", type(data_genres_films_afficher))
 
