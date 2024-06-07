@@ -46,13 +46,14 @@
 						</td>
 						<td class="align-middle">
 							{{ row.Mot_de_passe }}
-						{% if row.is_delete == "0" %}
+
+							{% if row.is_delete == 0 %}
 							<td class="align-middle">
-								Effacé
+								Actif
 							</td>
 						{% else %}
 							<td class="align-middle">
-								Actif
+								Effacé
 							</td>
 						{% endif %}
 
