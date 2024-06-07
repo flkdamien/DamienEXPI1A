@@ -273,7 +273,7 @@ def genre_delete_wtf():
                 data_films_attribue_genre_delete = session['data_films_attribue_genre_delete']
                 print("data_films_attribue_genre_delete ", data_films_attribue_genre_delete)
 
-                flash(f"Effacer le compte de façon définitive de la BD !!!", "danger")
+                flash(f"Voulez vous vraiment changer le statut du compte !!!", "danger")
                 # L'utilisateur vient de cliquer sur le bouton de confirmation pour effacer...
                 # On affiche le bouton "Effacer genre" qui va irrémédiablement EFFACER le genre
                 btn_submit_del = True
@@ -282,16 +282,19 @@ def genre_delete_wtf():
                 valeur_delete_dictionnaire = {"value_id_compte": id_genre_delete}
                 print("valeur_delete_dictionnaire ", valeur_delete_dictionnaire)
 
-                str_sql_delete_creation_compte = """DELETE FROM t_creation_compte WHERE Fk_compte_personne = %(value_id_compte)s"""
-                str_sql_delete_modification_compte = """DELETE FROM t_modification_compte WHERE Fk_compte_personne = %(value_id_compte)s"""
+                str_sql_delete_compte_statut = """UPDATE t_compte SET is_delete = 1 WHERE id_compte = %(value_id_compte)s"""
+                #Je met cela en commentaire parce que je voulais garder les comptes mais juste mettre leurs statut en effacé
 
-                str_sql_delete_idcompte = """DELETE FROM t_compte WHERE id_compte = %(value_id_compte)s"""
+                #str_sql_delete_creation_compte = """DELETE FROM t_creation_compte WHERE Fk_compte_personne = %(value_id_compte)s"""
+                #str_sql_delete_modification_compte = """DELETE FROM t_modification_compte WHERE Fk_compte_personne = %(value_id_compte)s"""
+                #str_sql_delete_idcompte = """DELETE FROM t_compte WHERE id_compte = %(value_id_compte)s"""
                 # Manière brutale d'effacer d'abord la "fk_genre", même si elle n'existe pas dans la "t_genre_film"
                 # Ensuite on peut effacer le genre vu qu'il n'est plus "lié" (INNODB) dans la "t_genre_film"
                 with DBconnection() as mconn_bd:
-                    mconn_bd.execute(str_sql_delete_creation_compte, valeur_delete_dictionnaire)
-                    mconn_bd.execute(str_sql_delete_modification_compte, valeur_delete_dictionnaire)
-                    mconn_bd.execute(str_sql_delete_idcompte, valeur_delete_dictionnaire)
+                    mconn_bd.execute(str_sql_delete_compte_statut, valeur_delete_dictionnaire)
+                    #mconn_bd.execute(str_sql_delete_creation_compte, valeur_delete_dictionnaire)
+                    #mconn_bd.execute(str_sql_delete_modification_compte, valeur_delete_dictionnaire)
+                    #mconn_bd.execute(str_sql_delete_idcompte, valeur_delete_dictionnaire)
 
                 flash(f"Compte définitivement effacé !!", "success")
                 print(f"Compte définitivement effacé !!")
