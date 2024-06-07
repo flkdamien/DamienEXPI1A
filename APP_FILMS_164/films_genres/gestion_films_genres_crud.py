@@ -91,12 +91,12 @@ def films_genres_afficher(id_film_sel):
     nom: edit_genre_film_selected
     On obtient un objet "objet_dumpbd"
 
-    Récupère la liste de tous les genres du film sélectionné par le bouton "MODIFIER" de "films_genres_afficher.html"
+    Récupère la liste de tous les personne du compte sélectionné par le bouton "MODIFIER" de "films_genres_afficher.html"
     
     Dans une liste déroulante particulière (tags-selector-tagselect), on voit :
-    1) Tous les genres contenus dans la "t_genre".
-    2) Les genres attribués au film selectionné.
-    3) Les genres non-attribués au film sélectionné.
+    1) Tous les compte contenus dans la "t_compte".
+    2) Les comptes attribués au personne selectionné.
+    3) Les comptes non-attribués au personne sélectionné.
 
     On signale les erreurs importantes
 
@@ -108,10 +108,10 @@ def edit_genre_film_selected():
     if request.method == "GET":
         try:
             with DBconnection() as mc_afficher:
-                strsql_genres_afficher = """SELECT id_genre, intitule_genre FROM t_genre ORDER BY id_genre ASC"""
+                strsql_genres_afficher = """SELECT id_compte, Nom_Pseudo FROM t_compte ORDER BY id_compte ASC"""
                 mc_afficher.execute(strsql_genres_afficher)
-            data_genres_all = mc_afficher.fetchall()
-            print("dans edit_genre_film_selected ---> data_genres_all", data_genres_all)
+                data_genres_all = mc_afficher.fetchall()
+                print("dans edit_genre_film_selected ---> data_genres_all", data_genres_all)
 
             # Récupère la valeur de "id_film" du formulaire html "films_genres_afficher.html"
             # l'utilisateur clique sur le bouton "Modifier" et on récupère la valeur de "id_film"
@@ -128,28 +128,24 @@ def edit_genre_film_selected():
             valeur_id_film_selected_dictionnaire = {"value_id_film_selected": id_film_genres_edit}
 
             # Récupère les données grâce à 3 requêtes MySql définie dans la fonction genres_films_afficher_data
-            # 1) Sélection du film choisi
-            # 2) Sélection des genres "déjà" attribués pour le film.
-            # 3) Sélection des genres "pas encore" attribués pour le film choisi.
-            # ATTENTION à l'ordre d'assignation des variables retournées par la fonction "genres_films_afficher_data"
             data_genre_film_selected, data_genres_films_non_attribues, data_genres_films_attribues = \
                 genres_films_afficher_data(valeur_id_film_selected_dictionnaire)
 
             print(data_genre_film_selected)
-            lst_data_film_selected = [item['id_film'] for item in data_genre_film_selected]
+            lst_data_film_selected = [item['id_personne'] for item in data_genre_film_selected]
             print("lst_data_film_selected  ", lst_data_film_selected,
                   type(lst_data_film_selected))
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui ne sont pas encore sélectionnés.
-            lst_data_genres_films_non_attribues = [item['id_genre'] for item in data_genres_films_non_attribues]
+            lst_data_genres_films_non_attribues = [item['id_compte'] for item in data_genres_films_non_attribues]
             session['session_lst_data_genres_films_non_attribues'] = lst_data_genres_films_non_attribues
             print("lst_data_genres_films_non_attribues  ", lst_data_genres_films_non_attribues,
                   type(lst_data_genres_films_non_attribues))
 
             # Dans le composant "tags-selector-tagselect" on doit connaître
             # les genres qui sont déjà sélectionnés.
-            lst_data_genres_films_old_attribues = [item['id_genre'] for item in data_genres_films_attribues]
+            lst_data_genres_films_old_attribues = [item['id_compte'] for item in data_genres_films_attribues]
             session['session_lst_data_genres_films_old_attribues'] = lst_data_genres_films_old_attribues
             print("lst_data_genres_films_old_attribues  ", lst_data_genres_films_old_attribues,
                   type(lst_data_genres_films_old_attribues))
@@ -162,7 +158,7 @@ def edit_genre_film_selected():
 
             # Extrait les valeurs contenues dans la table "t_genres", colonne "intitule_genre"
             # Le composant javascript "tagify" pour afficher les tags n'a pas besoin de l'id_genre
-            lst_data_genres_films_non_attribues = [item['intitule_genre'] for item in data_genres_films_non_attribues]
+            lst_data_genres_films_non_attribues = [item['Nom_Pseudo'] for item in data_genres_films_non_attribues]
             print("lst_all_genres gf_edit_genre_film_selected ", lst_data_genres_films_non_attribues,
                   type(lst_data_genres_films_non_attribues))
 
@@ -171,11 +167,11 @@ def edit_genre_film_selected():
                                                  f"{edit_genre_film_selected.__name__} ; "
                                                  f"{Exception_edit_genre_film_selected}")
 
-    return render_template("films_genres/films_genres_modifier_tags_dropbox.html",
-                           data_genres=data_genres_all,
-                           data_film_selected=data_genre_film_selected,
-                           data_genres_attribues=data_genres_films_attribues,
-                           data_genres_non_attribues=data_genres_films_non_attribues)
+        return render_template("films_genres/films_genres_modifier_tags_dropbox.html",
+                               data_genres=data_genres_all,
+                               data_film_selected=data_genre_film_selected,
+                               data_genres_attribues=data_genres_films_attribues,
+                               data_genres_non_attribues=data_genres_films_non_attribues)
 
 
 """
