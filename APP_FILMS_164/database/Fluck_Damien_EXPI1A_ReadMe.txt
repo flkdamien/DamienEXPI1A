@@ -36,7 +36,7 @@ Aujordhui je vais vous expliquer comment installer et faire fonctionner mon proj
         Suivez les étapes de configuration initiale pour configurer votre environnement de développement
         Choisissez le répertoire de projet par défaut et configurez les paramètres de votre choix
 7)Ouverture du projet
-    8)Décompresser le fichier .zip
+    8)Décompresser le fichier .zip (le fichier .zip est télechargable depuis ici (https://github.com/flkdamien/DamienEXPI1A/archive/refs/heads/master.zip)
         Ouvrez le répertoire où se trouve le fichier .zip de votre projet
         Décompresser le fichier .zip en utilisant un outil de décompression comme WinZip ou 7-Zip (ou Archive Utility sur macOS)
     9)Ouvrir PyCharm
