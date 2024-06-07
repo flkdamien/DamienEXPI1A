@@ -4,9 +4,13 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-12">
-			<p>
-				Compte
-			</p>
+			<td class="align-middle text-end">
+		<a class="btn btn-primary btn-lg float-end" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
+			</td>
+					<p style="font-size: 30px;">
+						  Compte
+					</p>
+
             <table class="table table-bordered table-sm">
             {% if data %}
                 <thead>
@@ -58,15 +62,11 @@
 						{% endif %}
 
 						<td class="text-center" class="align-middle">
-							<a class="btn btn-primary" href="{{ url_for('genres_ajouter_wtf') }}" role="button">Ajouter</a>
-						</td>
-						<td class="text-center" class="align-middle">
 							<a class="btn btn-warning" href="{{ url_for('genre_update_wtf', id_genre_btn_edit_html=row.id_compte) }}" role="button">Edit</a>
 						</td>
 						<td class="text-center" class="align-middle">
 							<a class="btn btn-danger" href="{{ url_for('genre_delete_wtf', id_genre_btn_delete_html=row.id_compte) }}" role="button">Delete</a>
 						</td>
-
 					</tr>
 				</tbody>
             {% else %}

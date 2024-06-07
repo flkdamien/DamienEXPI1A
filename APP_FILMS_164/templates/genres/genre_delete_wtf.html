@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Effacer un GENRE (WTF) {% endblock %}
+{% block title %} Effacer un Compte (WTF) {% endblock %}
 {% block body %}
 <div class="container">
 	<div class="row">
@@ -17,9 +17,9 @@
 						<h3>Ce compte à effacer n'est associé à aucune personne.</h3>
 					{% endif %}
 					{% if variable == "1" %}
-						La variable est égale à "effacé".
+						Le compte est effacé.
 					{% else %}
-						La variable est égale à "actif".
+						Le compte est actif
 					{% endif %}
 
 					{% if data_films_associes %}
