@@ -27,5 +27,32 @@ Aujordhui je vais vous expliquer comment installer et faire fonctionner mon proj
         Cliquez sur "Télécharger" en haut à droite de la page
         Sélectionnez "PyCharm Community" et choisissez la dernière version disponible
         Téléchargez le fichier d'installation correspondant à votre système d'exploitation (Windows, macOS ou Linux)
-
+    5)Exécuter l'installateur
+        Ouvrez le fichier d'installation téléchargé
+        Suivez les instructions de l'installateur pour installer PyCharm
+        Acceptez les termes de la licence et choisissez l'emplacement d'installation
+    6)Configurer PyCharm
+        Lorsque l'installation est terminée, lancez PyCharm
+        Suivez les étapes de configuration initiale pour configurer votre environnement de développement
+        Choisissez le répertoire de projet par défaut et configurez les paramètres de votre choix
+7)Ouverture du projet
+    8)Décompresser le fichier .zip
+        Ouvrez le répertoire où se trouve le fichier .zip de votre projet
+        Décompresser le fichier .zip en utilisant un outil de décompression comme WinZip ou 7-Zip (ou Archive Utility sur macOS)
+    9)Ouvrir PyCharm
+        Lancez PyCharm Community Edition
+        Si vous avez déjà un projet ouvert, fermez-le en cliquant sur "File" > "Close Project"
+    10)Ouvrir le projet
+        Dans PyCharm, cliquez sur "File" > "Open" (ou "Ouvrir" sur macOS)
+        Sélectionnez le répertoire où vous avez extrait les fichiers du projet
+        Sélectionnez le répertoire racine du projet (le répertoire qui contient tous les fichiers du projet)
+        Cliquez sur "OK" pour ouvrir le projet
+Et voila vous avez installer le projet.
+Maintenant je vais vous expliquez comment faire fonctionner le site web:
+Il va falloir démarrer laragon en appuyant sur le bouton démarer
+Ensuite il va falloir faire un run de run_mon_app.py
+Puis dans le terminal un adresse ip va apparaite
+Cliquez dessus
+Et voila vous avez accès au projet
+Quand vous avez fini votre utilisation vous pouvez stoper le fichier run_mon_app.py
 
